@@ -1,0 +1,6 @@
+# IDEA
+backend/fax/apps/chat/migrations/__pycache__/
+backend/fax/apps/chat/__pycache__/
+backend/fax/apps/__pycache__/
+/.idea
+/.DS_Store
