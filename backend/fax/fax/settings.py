@@ -17,8 +17,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'apps.chat',
+    'rest_framework',
+    'drf_yasg',
+    'djoser',
     'django_extensions',
+    'apps.chat',
     'apps.account'
 ]
 
