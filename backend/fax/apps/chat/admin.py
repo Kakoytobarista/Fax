@@ -12,9 +12,9 @@ class MessageAdmin(admin.ModelAdmin):
 
 @admin.register(Chat)
 class ChatAdmin(admin.ModelAdmin):
-    list_display = ('get_participants_list', )
-    filter_horizontal = ('participants', 'messages')
+    list_display = ('get_messages_list', 'chat_owner', 'recipient', )
+    filter_horizontal = ('messages', )
 
     @staticmethod
-    def get_participants_list(obj):
-        return ", ".join([str(item) for item in obj.participants.all()])
+    def get_messages_list(obj):
+        return ", ".join([str(item) for item in obj.messages.all()])

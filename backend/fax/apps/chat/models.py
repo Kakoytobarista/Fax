@@ -5,12 +5,13 @@ from fax.settings import AUTH_USER_MODEL
 
 class Message(models.Model):
     author = models.ForeignKey(
-        AUTH_USER_MODEL, related_name='message_author', on_delete=models.CASCADE,
-        verbose_name='Author_of_message'
+        AUTH_USER_MODEL, related_name='message_author',
+        on_delete=models.CASCADE, verbose_name='Author_of_message'
     )
     content = models.TextField(verbose_name='Text of message')
     created = models.DateTimeField(
-        auto_now_add=True, db_index=True, verbose_name='Created time'
+        auto_now_add=True, db_index=True,
+        verbose_name='Created time'
     )
 
     class Meta:
@@ -21,14 +22,19 @@ class Message(models.Model):
 
 
 class Chat(models.Model):
-    participants = models.ManyToManyField(
-        AUTH_USER_MODEL, related_name='chat_participants',
-        blank=True,
-        verbose_name='Participants of chat',
+    recipient = models.ForeignKey(
+        AUTH_USER_MODEL, related_name='chat_recipient',
+        on_delete=models.CASCADE, verbose_name='Chat recipient'
+    )
+    chat_owner = models.ForeignKey(
+        AUTH_USER_MODEL, related_name='chat_owner',
+        on_delete=models.CASCADE, verbose_name='Chat owner'
     )
     messages = models.ManyToManyField(
-        Message, blank=True, verbose_name='Messages of chat'
+        Message, related_name='chat_messages',
+        blank=True, verbose_name='Messages of chat'
     )
 
     def __str__(self):
-        return f'Chat: {self.pk} - Participants: {self.participants}'
+        return (f'Chat: {self.pk} - Chat owner: {self.chat_owner} '
+                f'- Chat recipient: {self.recipient}')

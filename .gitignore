@@ -9,3 +9,7 @@ backend/fax/apps/chat/__pycache__/
 backend/fax/apps/__pycache__/
 backend/fax/apps/api/__pycache__/
 backend/fax/apps/account/__pycache__/
+backend/apps/account/migrations/__pycache__
+backend/fax/fax/__pycache__/
+backend/fax/apps/chat/migrations/
+backend/fax/apps/account/migrations/

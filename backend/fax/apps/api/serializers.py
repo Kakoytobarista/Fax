@@ -22,15 +22,39 @@ class CreateMessageSerializer(serializers.ModelSerializer):
                   'created')
 
 
-class ChatSerializer(serializers.ModelSerializer):
-    participants = serializers.StringRelatedField()
-    messages = serializers.StringRelatedField()
+class ReadChatSerializer(serializers.ModelSerializer):
+    participants = serializers.StringRelatedField(many=True)
+    messages = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Chat
-        fields = ('participants',
-                  'messages',
+        fields = (
+            'id',
+            'participants',
+            'messages',
+            'chat_owner',
                   )
+
+
+class CreateChatSerializer(serializers.ModelSerializer):
+    chat_owner = serializers.StringRelatedField()
+
+    class Meta:
+        model = Chat
+        fields = (
+            'id',
+            'participants',
+            'messages',
+            'chat_owner'
+                  )
+
+    @staticmethod
+    def validate_participants(value):
+        if not value:
+            raise serializers.ValidationError(
+                'You need to add least one member.'
+            )
+        return value
 
 
 class CustomUserSerializer(serializers.ModelSerializer):

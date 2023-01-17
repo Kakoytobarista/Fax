@@ -1,26 +1,23 @@
 from rest_framework import mixins
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 
-class ChatMixin(mixins.RetrieveModelMixin,
-                mixins.DestroyModelMixin,
-                mixins.CreateModelMixin,
-                mixins.UpdateModelMixin,
-                viewsets.GenericViewSet):
+class BaseMixinViewSet(mixins.ListModelMixin,
+                       mixins.RetrieveModelMixin,
+                       mixins.DestroyModelMixin,
+                       mixins.CreateModelMixin,
+                       mixins.UpdateModelMixin,
+                       viewsets.GenericViewSet):
     """
     Mixin for getting, deleting, creating mixin-viewSet,
-    updating of ChatViewSet
+    updating of ChatViewSet, MessageViewSet
     """
-    pass
+    queryset = None
+    serializer_class = None
+    permission_classes = (IsAuthenticated,)
 
-
-class MessageMixin(mixins.ListModelMixin,
-                   mixins.DestroyModelMixin,
-                   mixins.CreateModelMixin,
-                   mixins.UpdateModelMixin,
-                   viewsets.GenericViewSet):
-    """
-    Mixin for getting, deleting, creating mixin-viewSet,
-    updating of MessageViewSet
-    """
-    pass
+    def get_serializer_class(self):
+        if self.request.method in ['POST', 'PATCH', 'PUT']:
+            return self.create_serializer_class
+        return self.read_serializer_class
